@@ -149,7 +149,7 @@ struct HTTPDecoder {
         return nil
     }
 
-    static func readBody<S: AsyncChunkedSequence>(from bytes: S, length: String?, maxSizeForComplete: Int = 10_485_760) async throws -> HTTPBodySequence where S.Element == UInt8 {
+    static func readBody(from bytes: some AsyncChunkedSequence<UInt8>, length: String?, maxSizeForComplete: Int = 10_485_760) async throws -> HTTPBodySequence {
         guard let length = length.flatMap(Int.init) else {
             return HTTPBodySequence(data: Data())
         }
